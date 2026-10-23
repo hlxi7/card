@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متعوب عليه راهو!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-color: #070709;
+      --card-bg: #0f0f13;
+      --border-color: #22222a;
+      --gold-accent: #c5a059;
+      --text-main: #e1e1e6;
+      --text-muted: #71717a;
+      --font-heading: 'Cinzel', serif;
+      --font-body: 'Playfair Display', serif;
+      --font-arabic: 'Amiri', serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px 12px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .card-container {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95);
+      width: 100%;
+      max-width: 400px;
+      padding: 35px 22px;
+      border-radius: 12px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-container::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 1px solid rgba(197, 160, 89, 0.18);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .header-subtitle {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .main-title {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+      color: var(--gold-accent);
+    }
+
+    .age-label {
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 15px;
+    }
+
+    .age-number {
+      font-family: var(--font-heading);
+      font-size: 3.8rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 5px 0;
+      line-height: 1;
+    }
+
+    .quote-text {
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 25px;
+    }
+
+    /* قسم خيارات الأمنيات */
+    .wish-section {
+      margin: 20px 0;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    .wish-header {
+      font-family: var(--font-arabic);
+      font-size: 1.1rem;
+      color: var(--gold-accent);
+      margin-bottom: 15px;
+    }
+
+    .wish-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wish-opt-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(197, 160, 89, 0.25);
+      color: #d1d1d6;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: var(--font-arabic);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .wish-opt-btn:hover {
+      background: rgba(197, 160, 89, 0.15);
+      border-color: var(--gold-accent);
+      color: #fff;
+    }
+
+    /* قسم كتابة أمنية خاصة */
+    .custom-wish-container {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .custom-wish-input {
+      width: 100%;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: #fff;
+      font-family: var(--font-arabic);
+      font-size: 0.9rem;
+      outline: none;
+      text-align: center;
+    }
+
+    .custom-wish-input:focus {
+      border-color: var(--gold-accent);
+    }
+
+    /* زر موافق الهارب */
+    .runaway-btn {
+      background: var(--gold-accent);
+      color: #000;
+      border: none;
+      padding: 8px 24px;
+      font-family: var(--font-arabic);
+      font-size: 0.9rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: top 0.15s ease, left 0.15s ease, background 0.3s ease;
+      position: relative;
+    }
+
+    .runaway-btn.no-mode {
+      background: #8b0000 !important;
+      color: #fff !important;
+      position: relative !important;
+      top: 0 !important;
+      left: 0 !important;
+    }
+
+    .wish-box {
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .wish-text {
+      font-size: 0.82rem;
+      color: #b0b0b8;
+      line-height: 1.6;
+      font-style: italic;
+      font-family: var(--font-arabic);
+    }
+
+    .footer-text {
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    /* الصفحات الفرعية */
+    .sub-page {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .response-message {
+      font-family: var(--font-arabic);
+      font-size: 1.15rem;
+      color: #ffffff;
+      line-height: 1.8;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(197, 160, 89, 0.08);
+      border-right: 3px solid var(--gold-accent);
+      border-radius: 6px;
+      text-align: right;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: transparent;
+      border: 1px solid var(--gold-accent);
+      color: var(--gold-accent);
+      font-family: var(--font-arabic);
+      font-size: 0.95rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .action-btn:hover {
+      background: var(--gold-accent);
+      color: #000;
+    }
+
+    .action-btn.secondary {
+      border-color: var(--border-color);
+      color: var(--text-muted);
+    }
+
+    .action-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    /* تصميم صندوق الهدية الفاخر */
+    .gift-container {
+      margin: 30px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .gift-box {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #1a1a24, #0f0f13);
+      border: 2px solid var(--gold-accent);
+      border-radius: 12px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 25px rgba(197, 160, 89, 0.3);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: giftPulse 2s infinite ease-in-out;
+    }
+
+    .gift-box:hover {
+      transform: scale(1.08) rotate(3deg);
+    }
+
+    .gift-ribbon-v {
+      position: absolute;
+      width: 16px;
+      height: 100%;
+      background: var(--gold-accent);
+    }
+
+    .gift-ribbon-h {
+      position: absolute;
+      height: 16px;
+      width: 100%;
+      background: var(--gold-accent);
+    }
+
+    .gift-bow {
+      font-size: 2.2rem;
+      z-index: 2;
+      filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+    }
+
+    .gift-hint {
+      font-family: var(--font-arabic);
+      font-size: 0.85rem;
+      color: var(--gold-accent);
+      margin-top: 15px;
+      animation: blinkText 1.5s infinite;
+    }
+
+    .gift-message-box {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      background: rgba(197, 160, 89, 0.1);
+      border: 1px solid var(--gold-accent);
+      border-radius: 8px;
+      animation: popIn 0.5s ease forwards;
+    }
+
+    .gift-text {
+      font-family: var(--font-arabic);
+      font-size: 1.05rem;
+      color: #ffffff;
+      line-height: 1.7;
+    }
+
+    @keyframes giftPulse {
+      0%, 100% { box-shadow: 0 0 15px rgba(197, 160, 89, 0.2); }
+      50% { box-shadow: 0 0 30px rgba(197, 160, 89, 0.6); }
+    }
+
+    @keyframes blinkText {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* تأثير النجوم */
+    .star-particle {
+      position: fixed;
+      pointer-events: none;
+      color: var(--gold-accent);
+      font-size: 14px;
+      z-index: 9999;
+      animation: starFly 1.2s ease-out forwards;
+    }
+
+    @keyframes starFly {
+      0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2) rotate(180deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= الصفحة الرئيسية ================= -->
+  <div class="card-container" id="mainPage">
+    <div class="header-subtitle">hi</div>
+    <h1 class="main-title">زيزو</h1>
+    
+    <div class="divider">✦</div>
+
+    <div class="age-label">HAPPY BIRTHDAY</div>
+    <div class="age-number" id="ageDisplay">1</div>
+    <div class="quote-text"></div>
+
+    <!-- قسم اختيار الأمنية -->
+    <div class="wish-section">
+      <div class="wish-header">تحققلى أمنية؟ اختار وحدة ✨</div>
+      <div class="wish-options">
+        <!-- الخيار الأول يظهر كخيار طبيعي وبدون أي إشارة إلى أنه الخيار الصحيح -->
+        
+        <button class="wish-opt-btn" onclick="openResponsePage(3)">👑 تنسى كل المسميات متاعك</button>
+        <button class="wish-opt-btn" onclick="openResponsePage(2)">💫 تخسر ضدي ديما في قيمات واو</button>
+        <button class="wish-opt-btn" onclick="openGiftPage('لأنك اخترت صح تقدر تطلب مني شن تبي ولو كان طلبك معقول حنوافق عليه 🎁✨')">✨ تقولي ياحلا</button>
+        
+      </div>
+
+      <!-- كتابة أمنية مخصصة -->
+      <div class="custom-wish-container">
+        <input type="text" id="customInput" class="custom-wish-input" placeholder="أو اكتب أمنيتك هنا..." />
+        <button id="runawayBtn" class="runaway-btn" onmouseover="tryRun()" onclick="handleCustomSubmit()">موافق</button>
+      </div>
+    </div>
+
+    <div class="wish-box">
+      <p class="wish-text">
+        "اختار واحتار يايزونة ليك هدية لو اخترت صح"
+      </p>
+    </div>
+
+    <div class="footer-text">WITH LOVE, ON YOUR SPECIAL DAY</div>
+  </div>
+
+  <!-- ================= الصفحة الفرعية (صفحة عرض الرد العادي) ================= -->
+  <div class="card-container sub-page" id="responsePage">
+    <div class="header-subtitle">RESPONSE</div>
+    <div class="divider">✦</div>
+
+    <!-- نص الرد المتغير -->
+    <div class="response-message" id="responseText"></div>
+
+    <!-- زر الموافقة أو الاختيار من جديد -->
+    <button class="action-btn" onclick="acceptWish()">إيه لوزز موافقة على الأمنية هادي ✨</button>
+    <button class="action-btn secondary" onclick="goBackToMain()">رجوع واختيار أمنية ثانية 🔄</button>
+
+    <div class="footer-text" style="margin-top: 30px;">from: حلا</div>
+  </div>
+
+  <!-- ================= صفحة الهدية المفاجأة ================= -->
+  <div class="card-container sub-page" id="giftPage">
+    <div class="header-subtitle">A SPECIAL GIFT FOR YOU</div>
+    <div class="divider">✦</div>
+
+    <!-- صندوق الهدية التفاعلي -->
+    <div class="gift-container" id="giftContainer" onclick="openGift()">
+      <div class="gift-box" id="giftBox">
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-ribbon-h"></div>
+        <div class="gift-bow">🎁</div>
+      </div>
+      <p class="gift-hint" id="giftHint">ready or not??✨</p>
+    </div>
+
+    <!-- رسالة الهدية المخفية (تظهر بعد فتح الهدية) -->
+    <div class="gift-message-box" id="giftMessageBox">
+      <p class="gift-text" id="giftText"></p>
+    </div>
+
+    <button class="action-btn secondary" style="margin-top:20px;" onclick="goBackToMainFromGift()">رجوع للصفحة الرئيسية 🔄</button>
+    
+    <div class="footer-text" style="margin-top: 25px;">WITH LOVE, ON YOUR SPECIAL DAY</div>
+  </div>
+
+  <script>
+    // 1. عداد العمر التفاعلي
+    const targetAge = 20;
+    const ageDisplay = document.getElementById('ageDisplay');
+    
+    window.addEventListener('DOMContentLoaded', () => {
+      let currentNumber = 1;
+      const duration = 1500;
+      const stepTime = Math.abs(Math.floor(duration / targetAge));
+      
+      const timer = setInterval(() => {
+        ageDisplay.textContent = currentNumber;
+        if (currentNumber >= targetAge) clearInterval(timer);
+        currentNumber++;
+      }, stepTime);
+    });
+
+    // 2. كائن الردود
+    const responses = {
+      2: "هممم تمنيتك تختار الأولى بس عادي حتى هكي لوز اللوز✨",
+      3: "اووفف كبيرة منك هادي👑",
+      "rejected": "طيح الله سعدك اني نعرف مصلحتك اختار من الي فوق بس 😜! لازم تقتنع وتختار واحدة من الأمنيات المكتوبة ✨"
+    };
+
+    // 3. التنقل بين الصفحات العادية
+    function openResponsePage(wishId) {
+      document.getElementById('responseText').textContent = responses[wishId];
+      document.getElementById('mainPage').style.display = 'none';
+      document.getElementById('giftPage').style.display = 'none';
+      document.getElementById('responsePage').style.display = 'block';
+    }
+
+    function goBackToMain() {
+      document.getElementById('responsePage').style.display = 'none';
+      document.getElementById('mainPage').style.display = 'block';
+    }
+
+    function acceptWish() {
+      alert("تم اعتماد أمنيتك بنجاح! ✨");
+      goBackToMain();
+    }
+
+    // 4. زر موافق الهراب والتحول إلى "لا"
+    let escapeCount = 0;
+    const runawayBtn = document.getElementById('runawayBtn');
+
+    function tryRun() {
+      if (escapeCount < 3) {
+        escapeCount++;
+        runawayBtn.style.position = 'fixed';
+        
+        const randomTop = Math.floor(Math.random() * (window.innerHeight - 60)) + 30;
+        const randomLeft = Math.floor(Math.random() * (window.innerWidth - 100)) + 30;
+        
+        runawayBtn.style.top = randomTop + 'px';
+        runawayBtn.style.left = randomLeft + 'px';
+
+        if (escapeCount === 3) {
+          setTimeout(() => {
+            runawayBtn.textContent = 'لا ❌';
+            runawayBtn.classList.add('no-mode');
+          }, 200);
+        }
+      }
+    }
+
+    function handleCustomSubmit() {
+      if (escapeCount >= 3) {
+        openResponsePage('rejected');
+      } else {
+        tryRun();
+      }
+    }
+
+    // 5. تأثير تطاير النجوم عند النقر
+    document.addEventListener('click', (e) => {
+      createStarCluster(e.clientX, e.clientY);
+    });
+
+    function createStarCluster(x, y) {
+      const starIcons = ['✦', '✧', '★', '✨'];
+      for (let i = 0; i < 7; i++) {
+        const star = document.createElement('div');
+        star.className = 'star-particle';
+        star.textContent = starIcons[Math.floor(Math.random() * starIcons.length)];
+        star.style.left = `${x}px`;
+        star.style.top = `${y}px`;
+
+        const dx = (Math.random() - 0.5) * 140;
+        const dy = (Math.random() - 0.5) * 140;
+        star.style.setProperty('--dx', `${dx}px`);
+        star.style.setProperty('--dy', `${dy}px`);
+
+        document.body.appendChild(star);
+        setTimeout(() => star.remove(), 1200);
+      }
+    }
+
+    // 6. التعامل مع صفحة الهدية
+    function openGiftPage(customMessage) {
+      if (customMessage) {
+        document.getElementById('giftText').textContent = customMessage;
+      }
+      
+      document.getElementById('giftContainer').style.display = 'flex';
+      document.getElementById('giftMessageBox').style.display = 'none';
+      document.getElementById('giftBox').style.transform = 'scale(1)';
+      document.getElementById('giftHint').style.display = 'block';
+      
+      document.getElementById('mainPage').style.display = 'none';
+      document.getElementById('responsePage').style.display = 'none';
+      document.getElementById('giftPage').style.display = 'block';
+    }
+
+    function openGift() {
+      const giftBox = document.getElementById('giftBox');
+      const giftHint = document.getElementById('giftHint');
+      const giftMessageBox = document.getElementById('giftMessageBox');
+
+      giftBox.style.transform = 'scale(0) rotate(180deg)';
+      giftHint.style.display = 'none';
+
+      const rect = giftBox.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      for (let i = 0; i < 20; i++) {
+        createStarCluster(centerX, centerY);
+      }
+
+      setTimeout(() => {
+        document.getElementById('giftContainer').style.display = 'none';
+        giftMessageBox.style.display = 'block';
+      }, 400);
+    }
+
+    function goBackToMainFromGift() {
+      document.getElementById('giftPage').style.display = 'none';
+      document.getElementById('mainPage').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
